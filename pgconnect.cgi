@@ -31,7 +31,7 @@ my $ref = $sth->execute;
 
 $rank=1;
 print $cgi->h2('Heritage Corpus Test'),
-      $cgi->p($cgi->escapeHTML($query));
+      $cgi->p($cgi->escapeHTML($query)),;
 while(my $arr_ref = $sth->fetchrow_arrayref){
     my ($name, $area, $score) = @$arr_ref;
     my $text = $cgi->escapeHTML("($rank) $name / $area");
@@ -43,7 +43,9 @@ while(my $arr_ref = $sth->fetchrow_arrayref){
           $cgi->br;
     $rank++;
 }
-print $cgi->end_html;
+print $cgi->span("------------------------------"),
+      $cgi->p($cgi->escapeHTML($sql)),
+      $cgi->end_html;
 
 $sth->finish;
 $conn->disconnect;
