@@ -9,9 +9,19 @@ print $cgi->header,
 
 my $conn = psql->connect;
 
-my $query = $conn->quote($cgi->param('title'));
+my $query = $cgi->param('title');
 if (length($cgi->param('title')) > 0) {
-    $sql = $sql = "SELECT heritage.name, heritage.area, inner_product(heritage.c1, heritage.c2, heritage.c3, heritage.c4, heritage.c5, heritage.c6, heritage.c7, heritage.c8, heritage.c9, heritage.c10, heritage_corpus.c1,heritage_corpus.c2, heritage_corpus.c3, heritage_corpus.c4, heritage_corpus.c5, heritage_corpus.c6, heritage_corpus.c7, heritage_corpus.c8, heritage_corpus.c9, heritage_corpus.c10) AS score FROM heritage, heritage_corpus WHERE heritage_corpus.word = $query ORDER BY score DESC;";
+    	@list = split(/,/, $query);
+        #map{$_ =~ s/^ *(.*?) *$/$1/; $_ }@list;
+        #map{$_ = 'word = \'' . $_ . '\' OR '; $_}@list;
+	foreach(@list){
+		$_ =~ s/^ *(.*?) *$/$1/;
+		$str = $str . 'word = \'' . $_ . '\' OR ';
+	}
+    chop($str);
+    chop($str);
+    chop($str);
+    $sql = "CREATE TEMP VIEW tmpview AS SELECT c1,c2,c3,c4,c5,c6,c7,c8,c9,c10 FROM heritage_corpus WHERE $str ; CREATE TEMP VIEW sumview AS SELECT sum(c1) AS c1, sum(c2) AS c2, sum(c3) AS c3, sum(c4) AS c4,sum(c5) AS c5,sum(c6) AS c6,sum(c7) AS c7,sum(c8) AS c8,sum(c9) AS c9,sum(c10) AS c10 FROM tmpview; SELECT heritage.name, heritage.area, inner_product(heritage.c1, heritage.c2, heritage.c3, heritage.c4, heritage.c5, heritage.c6, heritage.c7, heritage.c8, heritage.c9, heritage.c10, sumview.c1, sumview.c2, sumview.c3, sumview.c4, sumview.c5, sumview.c6, sumview.c7,sumview.c8, sumview.c9, sumview.c10) AS score FROM heritage, sumview ORDER BY score DESC;";
 } else {
     $sql = "SELECT heritage.name, 0 AS score FROM heritage;";
 }
