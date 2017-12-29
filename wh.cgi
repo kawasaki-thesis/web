@@ -9,8 +9,8 @@ print $cgi->header,
 
 my $conn = psql->connect;
 
-my $query = $cgi->param('title');
-if (length($cgi->param('title')) > 0) {
+my $query = $cgi->param('words');
+if (length($cgi->param('words')) > 0) {
     	@list = split(/,/, $query);
         #map{$_ =~ s/^ *(.*?) *$/$1/; $_ }@list;
         #map{$_ = 'word = \'' . $_ . '\' OR '; $_}@list;
