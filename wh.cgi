@@ -5,7 +5,7 @@ use psql;
 my $cgi = new CGI;
 $cgi->charset('euc-jp');
 print $cgi->header,
-      $cgi->start_html(-title=>'Heritage Corpus Test', -lang=>'ja-JP');
+      $cgi->start_html(-title=>'Recommended World Heritage List', -lang=>'ja-JP');
 
 my $conn = psql->connect;
 
