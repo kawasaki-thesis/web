@@ -37,7 +37,7 @@ my $sth = $conn->prepare($sql);
 my $ref = $sth->execute;
 
 $rank=1;
-print $cgi->h2('Heritage Corpus Test');
+print $cgi->h2('Recommended World Heritage List');
 while(my $arr_ref = $sth->fetchrow_arrayref){
     my ($name, $country, $area, $lo, $la, $score) = @$arr_ref;
     my $text = $cgi->escapeHTML("($rank) $name / $country / $area / $lo / $la");
