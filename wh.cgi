@@ -44,12 +44,13 @@ while(my $arr_ref = $sth->fetchrow_arrayref){
     my $text2 = $cgi->escapeHTML("score: $score");
     my $text3 = $cgi->escapeHTML("$description");
     my $img  = $cgi->img({width=>80, src=>$url});
-    print $cgi->a({href=>$url}, $img),
-          $cgi->span($text),
+    print $cgi->span($text),
+          $cgi->br,
+          $cgi->a({href=>$url}, $img),
           $cgi->br,
           $cgi->span($text2),
           $cgi->br,
-          $cgi->span($text3),
+          $cgi->span($description),
           $cgi->br,
           $cgi->br;
     $rank++;
