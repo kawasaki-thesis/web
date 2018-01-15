@@ -39,12 +39,17 @@ my $ref = $sth->execute;
 $rank=1;
 print $cgi->h2('Recommended World Heritage List');
 while(my $arr_ref = $sth->fetchrow_arrayref){
-    my ($name, $country, $area, $lo, $la, $score) = @$arr_ref;
+    my ($name, $country, $area, $url, $description, $lo, $la, $score) = @$arr_ref;
     my $text = $cgi->escapeHTML("($rank) $name / $country / $area / $lo / $la");
     my $text2 = $cgi->escapeHTML("score: $score");
-    print $cgi->span($text),
+    my $text3 = $cgi->escapeHTML("$description");
+    my $img  = $cgi->img({width=>80, src=>$url});
+    print $cgi->a({href=>$url}, $img),
+          $cgi->span($text),
           $cgi->br,
           $cgi->span($text2),
+          $cgi->br,
+          $cgi->span($text3),
           $cgi->br,
           $cgi->br;
     $rank++;
