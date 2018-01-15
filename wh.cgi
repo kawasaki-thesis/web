@@ -30,7 +30,7 @@ if (length($cgi->param('words')) > 0) {
             WHERE inner_product(world_heritage.c1, world_heritage.c2, world_heritage.c3, world_heritage.c4, world_heritage.c5, world_heritage.c6, world_heritage.c7, world_heritage.c8, world_heritage.c9, world_heritage.c10, sumview.c1, sumview.c2, sumview.c3, sumview.c4, sumview.c5, sumview.c6, sumview.c7,sumview.c8, sumview.c9, sumview.c10)>0 
             ORDER BY score DESC;";
 } else {
-    $sql = "SELECT world_heritage.name, world_heritage.country, world_heritage.area, world_heritage.longitude, world_heritage.latitude, 0 AS score FROM world_heritage;";
+    $sql = "SELECT world_heritage.name, world_heritage.country, world_heritage.area, world_heritage.img_url, world_heritage.description, world_heritage.longitude, world_heritage.latitude, 0 AS score FROM world_heritage;";
 }
 
 my $sth = $conn->prepare($sql);
