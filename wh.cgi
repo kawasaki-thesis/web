@@ -46,7 +46,8 @@ while(my $arr_ref = $sth->fetchrow_arrayref){
     my $text3 = $cgi->escapeHTML("$description");
     my $img  = $cgi->img({width=>80, src=>$url});
     if($score>$pre_score){
-        print $cgi->h3($group),
+        $groupno = $cgi->escapeHTML("RANK: $group");
+        print $cgi->h3($groupno),
               $cgi->br;
 　　　　$group++;
     }
