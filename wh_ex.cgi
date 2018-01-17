@@ -58,7 +58,14 @@ while(my $arr_ref = $sth->fetchrow_arrayref){
     $num++;
     $num2++;
     $pre_score = $score;
+    foreach $word (@list){
+	if($description =~ $word){
+		push(@answer, $name);
+		last;
+	}
+    }
 }
+print $cgi->p(join(',', @answer));
 $i=0;
 foreach $ranking (@table){
 	print $cgi->h3("RANK:" . ($i+1));
