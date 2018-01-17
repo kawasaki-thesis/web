@@ -44,9 +44,10 @@ print $cgi->h2('Recommended World Heritage List');
 while(my $arr_ref = $sth->fetchrow_arrayref){
     my ($name, $country, $area, $url, $description, $lo, $la, $score) = @$arr_ref;
     my $text = $cgi->escapeHTML("($num) $name");
-    my $text2 = $cgi->escapeHTML("score: $score");
+    my $text2 = $cgi->escapeHTML("$country");
     my $text3 = $cgi->escapeHTML("$description");
     my $img  = $cgi->img({width=>100, src=>$url});
+    $sc[$rank] = $score;
     if($pre_score > $score){
               $rank++;
               $num2=0;
@@ -61,11 +62,12 @@ while(my $arr_ref = $sth->fetchrow_arrayref){
 $i=0;
 foreach $ranking (@table){
 	print $cgi->h3("RANK:" . ($i+1));
+	print $cgi->p("Score:" . $sc[$i]);
 	print '<table border="1" rules="all" valign="top">';
 	foreach $tr (@{$ranking}){
-		print "<tr>\n<td>" . join("</td>\n<td>", @{$tr}) . "\n</tr>\n";
+		print '<tr><td valign="top">' . join('</td><td valign="top">', @{$tr}) . "</tr>";
 	}
-	print "</table>\n";
+	print "</table>";
 	$i++;
 	$tr_count=0;
 }
