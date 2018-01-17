@@ -45,11 +45,11 @@ while(my $arr_ref = $sth->fetchrow_arrayref){
     my $text2 = $cgi->escapeHTML("score: $score");
     my $text3 = $cgi->escapeHTML("$description");
     my $img  = $cgi->img({width=>80, src=>$url});
-    if($score>$pre_score){
+    if($score > $pre_score){
         $groupno = $cgi->escapeHTML("RANK: $group");
-        print $cgi->h3($groupno),
+        print $cgi->h3('Test'),
               $cgi->br;
-　　　　$group++;
+              $group++;
     }
     print $cgi->span($text),
           $cgi->br,
