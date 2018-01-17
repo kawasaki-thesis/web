@@ -47,7 +47,7 @@ while(my $arr_ref = $sth->fetchrow_arrayref){
     my $img  = $cgi->img({width=>80, src=>$url});
     if($score>$pre_score){
         print $cgi->h3($group),
-              $cgi->broup;
+              $cgi->br;
 　　　　$group++;
     }
     print $cgi->span($text),
