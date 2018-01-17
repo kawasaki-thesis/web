@@ -36,8 +36,9 @@ if (length($cgi->param('words')) > 0) {
 my $sth = $conn->prepare($sql);
 my $ref = $sth->execute;
 
-$rank=1;
+$rank=0;
 $num=1;
+$num2=0;
 print $cgi->h2('Recommended World Heritage List');
 while(my $arr_ref = $sth->fetchrow_arrayref){
     my ($name, $country, $area, $url, $description, $lo, $la, $score) = @$arr_ref;
@@ -46,17 +47,27 @@ while(my $arr_ref = $sth->fetchrow_arrayref){
     my $text3 = $cgi->escapeHTML("$description");
     my $img  = $cgi->img({width=>100, src=>$url});
     if($pre_score > $score || !defined $pre_score){
-        print $cgi->h3("RANK: $rank");
               $rank++;
+              $num2=0;
     }
-    print $cgi->span($text),
-          $cgi->br,
-          $cgi->span($text2),
-          $cgi->br,
-          $cgi->a({href=>$url}, $img),
-          $cgi->br;
+    $table[$rank][$num2][0]=$text;
+    $table[$rank][$num2][1]=$text2;
+    $table[$rank][$num2][2]=$img;
     $num++;
+    $num2++;
     $pre_score = $score;
+}
+foreach $ranking (@table){
+	print $cgi->start_table({border => '1'});
+	foreach $numbering (@{$ranking}){
+		print #$cgi->Tr([$q->th(['ミラン', 'ドルトムント', 'ガンバ大阪']),
+	      	              $cgi->td(join("\'", $numbering[0])),
+	      	              $cgi->br,
+	      	              $cgi->td(join("\'", $numbering[1])),
+	      	              $cgi->br,
+	      	              $cgi->td(join("\'", $numbering[2])),;
+	}
+	print $q->end_table;
 }
 print $cgi->span("------------------------------"),
       $cgi->p($cgi->escapeHTML($sql)),
