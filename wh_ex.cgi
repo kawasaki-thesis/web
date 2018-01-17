@@ -46,7 +46,7 @@ while(my $arr_ref = $sth->fetchrow_arrayref){
     my $text = $cgi->escapeHTML("($num) $name");
     my $text2 = $cgi->escapeHTML("$country");
     my $text3 = $cgi->escapeHTML("$description");
-    my $img  = $cgi->img({width=>100, src=>$url});
+    my $img  = $cgi->img({width=>80, src=>$url, title=>$description});
     $sc[$rank] = $score;
     if($pre_score > $score){
               $rank++;
