@@ -45,9 +45,8 @@ while(my $arr_ref = $sth->fetchrow_arrayref){
     my $text2 = $cgi->escapeHTML("score: $score / pre: $pre_score");
     my $text3 = $cgi->escapeHTML("$description");
     my $img  = $cgi->img({width=>100, src=>$url});
-    if($pre_score > $score || !defined $rank){
-        print $cgi->h3("RANK: $rank"),
-              $cgi->br;
+    if($pre_score > $score || !defined $pre_score){
+        print $cgi->h3("RANK: $rank");
               $rank++;
     }
     print $cgi->span($text),
