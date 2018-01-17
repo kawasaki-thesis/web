@@ -36,19 +36,19 @@ if (length($cgi->param('words')) > 0) {
 my $sth = $conn->prepare($sql);
 my $ref = $sth->execute;
 
-$group=1;
 $rank=1;
+$num=1;
 print $cgi->h2('Recommended World Heritage List');
 while(my $arr_ref = $sth->fetchrow_arrayref){
     my ($name, $country, $area, $url, $description, $lo, $la, $score) = @$arr_ref;
-    my $text = $cgi->escapeHTML("($rank) $name / $country / $area / $lo / $la");
+    my $text = $cgi->escapeHTML("($num) $name / $country / $area / $lo / $la");
     my $text2 = $cgi->escapeHTML("score: $score / pre: $pre_score");
     my $text3 = $cgi->escapeHTML("$description");
     my $img  = $cgi->img({width=>100, src=>$url});
-    if($pre_score>$socre||!defined $pre_score){
-        print $cgi->h3("RANK: $group"),
+    if($pre_score > $score || !defined $rank){
+        print $cgi->h3("RANK: $rank"),
               $cgi->br;
-              $group++;
+              $rank++;
     }
     print $cgi->span($text),
           $cgi->br,
@@ -59,7 +59,7 @@ while(my $arr_ref = $sth->fetchrow_arrayref){
           $cgi->span($description),
           $cgi->br,
           $cgi->br;
-    $rank++;
+    $num++;
     $pre_score = $score;
 }
 print $cgi->span("------------------------------"),
