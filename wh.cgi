@@ -12,8 +12,6 @@ my $conn = psql->connect;
 my $query = $cgi->param('words');
 if (length($cgi->param('words')) > 0) {
     	@list = split(/,/, $query);
-        #map{$_ =~ s/^ *(.*?) *$/$1/; $_ }@list;
-        #map{$_ = 'word = \'' . $_ . '\' OR '; $_}@list;
 	foreach(@list){
 		$_ =~ s/^ *(.*?) *$/$1/;
 		$str = $str . 'word = \'' . $_ . '\' OR ';
@@ -45,8 +43,8 @@ while(my $arr_ref = $sth->fetchrow_arrayref){
     my ($name, $country, $area, $url, $description, $lo, $la, $score) = @$arr_ref;
     my $text = $cgi->escapeHTML("($num) $name");
     my $text2 = $cgi->escapeHTML("$country");
-    my $text3 = "$lo / $la </br>$description";
-    my $img  = $cgi->img({width=>100, src=>$url, title=>$text3);
+    my $text3 = $cgi->escapeHTML("$description");
+    my $img  = $cgi->img({width=>80, src=>$url, title=>$description});
     $sc[$rank] = $score;
     if($pre_score > $score){
               $rank++;
