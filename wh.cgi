@@ -41,10 +41,13 @@ $pre_score = 0;
 print $cgi->h2('Recommended World Heritage List');
 while(my $arr_ref = $sth->fetchrow_arrayref){
     my ($name, $country, $area, $url, $description, $lo, $la, $score) = @$arr_ref;
+    if ($description =~ /<\/*p>/){
+		$description =~ s/<\/*p>//g;
+    }
     my $text = $cgi->escapeHTML("($num) $name");
     my $text2 = $cgi->escapeHTML("$country");
-    my $text3 = $cgi->escapeHTML("$description");
-    my $img  = $cgi->img({width=>80, src=>$url, title=>$description});
+    my $text3 = $name . "\n" . $lo . '/' . $la . "\n" . $description;
+    my $img  = $cgi->img({width=>80, src=>$url, title=>$text3});
     $sc[$rank] = $score;
     if($pre_score > $score){
               $rank++;
